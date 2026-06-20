@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Host Operator Suite | Private Social Marketplace</title>
+    <!-- Premium Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           COLOR SYSTEM & VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #06060B;
+            --surface-color: #0F0F18;
+            --surface-card: #151522;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #475569;
+            
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --accent: #00F0FF;
+            --neon-green: #10B981;
+            
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --font-main: 'Inter', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* =========================================
+           RESET & GLOBAL OVERFLOW SHIELD
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .gradient-text-1 { background: linear-gradient(135deg, #FFF 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Ambient Blur Background Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Nav Header */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 24px 0;
+            z-index: 100;
+            background: rgba(6, 6, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.05em; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; }
+        .logo i { color: var(--accent); font-size: 1.5rem; }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        .dashboard-hero {
+            padding-top: 150px;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+        .dashboard-hero h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 16px; letter-spacing: -0.04em; }
+        .dashboard-hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto; }
+
+        /* =========================================
+           OPERATOR DASHBOARD GRID MOCKUP
+           ========================================= */
+        .dashboard-window {
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 32px;
+            margin-bottom: 60px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Top High-Level Metrics Stats */
+        .stat-tile {
+            grid-column: span 1;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 24px;
+            text-align: left;
+            position: relative;
+        }
+        .stat-tile i { position: absolute; right: 24px; top: 24px; font-size: 1.5rem; color: var(--primary); }
+        .stat-tile span { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; letter-spacing: 0.05em; }
+        .stat-tile strong { display: block; font-size: 1.8rem; font-weight: 800; margin-top: 6px; }
+
+        /* Large Split Windows: Vetting Queue and Revenue Projection */
+        .dashboard-split-block {
+            grid-column: span 2;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            text-align: left;
+        }
+        .dashboard-split-block h3 { font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .dashboard-split-block h3 i { color: var(--accent); }
+
+        /* Live Application Vetting Stack */
+        .vetting-list { display: flex; flex-direction: column; gap: 12px; }
+        .applicant-node {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+            padding: 14px 20px; border-radius: 12px;
+        }
+        .applicant-profile h4 { font-size: 0.95rem; font-weight: 600; color: #fff; }
+        .applicant-profile span { font-size: 0.75rem; color: var(--text-secondary); display: block; }
+        
+        .action-icon-row { display: flex; gap: 8px; }
+        .action-circle-btn {
+            width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--glass-border);
+            background: transparent; color: #fff; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition-smooth);
+        }
+        .action-circle-btn.approve:hover { background: var(--neon-green); border-color: var(--neon-green); color: #000; }
+        .action-circle-btn.deny:hover { background: #EF4444; border-color: #EF4444; }
+
+        /* =========================================
+           INTERACTIVE REVENUE CALCULATOR
+           ========================================= */
+        .calc-wrapper {
+            display: flex; flex-direction: column; gap: 16px; margin-top: 8px;
+        }
+        .slider-group { width: 100%; }
+        .slider-group label { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; margin-bottom: 6px; }
+        .slider-group label span { color: #fff; }
+        
+        .operator-range-slider {
+            width: 100%; -webkit-appearance: none; background: rgba(255,255,255,0.05);
+            height: 6px; border-radius: 100px; outline: none;
+        }
+        .operator-range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+            background: var(--accent); cursor: pointer; box-shadow: 0 0 10px var(--accent);
+            transition: var(--transition-smooth);
+        }
+
+        .payout-puck {
+            background: rgba(0, 240, 255, 0.03); border: 1px solid rgba(0, 240, 255, 0.15);
+            padding: 16px; border-radius: 12px; text-align: center; margin-top: 10px;
+        }
+        .payout-puck span { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em; }
+        .payout-puck strong { display: block; font-size: 1.8rem; font-weight: 900; color: #fff; margin-top: 2px; }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--glass-border); padding: 80px 0 40px; background: #030307; font-size: 0.9rem; }
+        .footer-matrix { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 60px; }
+        .footer-column h4 { color: #fff; margin-bottom: 24px; font-weight: 600; }
+        .footer-column ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .footer-column ul li a { color: var(--text-secondary); text-decoration: none; transition: 0.2s; }
+        .footer-column ul li a:hover { color: var(--accent); }
+        .footer-baseline { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; display: flex; justify-content: space-between; color: var(--text-muted); flex-wrap: wrap; gap: 16px; }
+
+        /* =========================================
+           RESPONSIVE RE-GRID OVERRIDES
+           ========================================= */
+        @media (max-width: 1024px) {
+            .dashboard-window { grid-template-columns: repeat(2, 1fr); }
+            .stat-tile { grid-column: span 1; }
+        }
+        @media (max-width: 768px) {
+            .dashboard-hero h1 { font-size: 2.6rem; }
+            .dashboard-window { grid-template-columns: 1fr; padding: 20px; }
+            .stat-tile { grid-column: span 1; }
+            .dashboard-split-block { grid-column: span 1; }
+            .footer-matrix { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+        @media (max-width: 480px) {
+            .dashboard-hero h1 { font-size: 2.2rem; }
+            .footer-matrix { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Grid Lighting -->
+    <div class="glow-orb" style="top: 0; left: 10%; width: 500px; height: 500px; background: var(--primary);"></div>
+    <div class="glow-orb" style="bottom: 10%; right: -5%; width: 450px; height: 450px; background: var(--accent);"></div>
+
+    <!-- Navigation Header -->
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph-fill ph-infinity"></i> Angel Priyanka
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SUITE HEADER -->
+    <header class="container dashboard-hero">
+        <h1 class="gradient-text-1">The Host Operator Suite</h1>
+        <p>A look inside our premium SaaS hub. Complete vetting queue management systems, escrow transaction trackers, and predictive pricing scaling logs.</p>
+    </header>
+
+    <!-- CORE SAAS WINDOW CONSOLE INTERFACE -->
+    <main class="container">
+        <div class="dashboard-window">
+            
+            <!-- STAT 1 -->
+            <div class="stat-tile">
+                <i class="ph ph-ticket"></i>
+                <span>Active Capital Volume</span>
+                <strong>$14,820</strong>
+            </div>
+
+            <!-- STAT 2 -->
+            <div class="stat-tile">
+                <i class="ph ph-users-three"></i>
+                <span>Vetted Checked-In Base</span>
+                <strong>312</strong>
+            </div>
+
+            <!-- STAT 3 -->
+            <div class="stat-tile">
+                <i class="ph ph-hourglass-high"></i>
+                <span>Escrow Settlement Pools</span>
+                <strong>$4,900</strong>
+            </div>
+
+            <!-- STAT 4 -->
+            <div class="stat-tile">
+                <i class="ph ph-fingerprint"></i>
+                <span>Clearance Registry Index</span>
+                <strong>99.4%</strong>
+            </div>
+
+            <!-- SPLIT BLOCK LEFT: DYNAMIC USER VETTING PIPELINE ARCHE TYPE -->
+            <div class="dashboard-split-block">
+                <h3><i class="ph ph-shield-user"></i> Member Entrance Verification Queue</h3>
+                <div class="vetting-list">
+                    
+                    <!-- Applicant 1 -->
+                    <div class="applicant-node" id="node-app-1">
+                        <div class="applicant-profile">
+                            <h4>Marshall V.</h4>
+                            <span>Clearance Score: 98% • Tech Founder Circle</span>
+                        </div>
+                        <div class="action-icon-row">
+                            <button class="action-circle-btn approve" onclick="removeMockNode('node-app-1')"><i class="ph ph-check"></i></button>
+                            <button class="action-circle-btn deny" onclick="removeMockNode('node-app-1')"><i class="ph ph-x"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Applicant 2 -->
+                    <div class="applicant-node" id="node-app-2">
+                        <div class="applicant-profile">
+                            <h4>Elena R.</h4>
+                            <span>Clearance Score: 94% • Art & Culinary Hub</span>
+                        </div>
+                        <div class="action-icon-row">
+                            <button class="action-circle-btn approve" onclick="removeMockNode('node-app-2')"><i class="ph ph-check"></i></button>
+                            <button class="action-circle-btn deny" onclick="removeMockNode('node-app-2')"><i class="ph ph-x"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SPLIT BLOCK RIGHT: INTERACTIVE VALUE PRICING FORECASTER MODEL -->
+            <div class="dashboard-split-block">
+                <h3><i class="ph ph-coins"></i> Dynamic Revenue Estimation Modeler</h3>
+                <div class="calc-wrapper">
+                    
+                    <div class="slider-group">
+                        <label>Target Ticket Allocations: <span id="lblTickets">40 Spots</span></label>
+                        <input type="range" class="operator-range-slider" id="inputTickets" min="10" max="200" value="40" oninput="runSaaSCalculator()">
+                    </div>
+
+                    <div class="slider-group">
+                        <label>Price Value Per Ticket Allocation: <span id="lblPrice">$150</span></label>
+                        <input type="range" class="operator-range-slider" id="inputPrice" min="20" max="1000" value="150" oninput="runSaaSCalculator()">
+                    </div>
+
+                    <div class="payout-puck">
+                        <span>Net Platform Payout Projection (Est.)</span>
+                        <strong id="calcPayout">$5,700</strong>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER MATRIX LINK SYSTEM -->
+    <footer>
+        <div class="container">
+            <div class="footer-matrix">
+                <div class="footer-column">
+                    <a href="#" class="brand-logo" style="margin-bottom:16px;"><i class="ph-fill ph-infinity"></i> Angel Priyanka</a>
+                    <p style="color:var(--text-secondary); max-width:260px;">The premier ecosystem for trusted physical experiences and authentic community growth models.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Ecosystem Hub</h4>
+                    <ul>
+                        <li><a href="index.html">Explore Feed</a></li>
+                        <li><a href="host.html">Verify Host Status</a></li>
+                        <li><a href="join.html">Waitlist Queue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Infrastructure</h4>
+                    <ul>
+                        <li><a href="trust.html">Safety & Vetting Center</a></li>
+                        <li><a href="#">Security Thresholds</a></li>
+                        <li><a href="#">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Governance</h4>
+                    <ul>
+                        <li><a href="#">User Privacy Commitments</a></li>
+                        <li><a href="terms.html">Platform Terms</a></li>
+                        <li><a href="#">Code of Conduct</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-baseline">
+                <div>&copy; 2026 Angel Priyanka Inc. All rights reserved globally.</div>
+                <div style="display:flex; gap:16px; font-size:1.2rem;">
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-twitter-logo"></i></a>
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-linkedin-logo"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE REAL-TIME MATH CONTROLLERS -->
+    <script>
+        function runSaaSCalculator() {
+            const spacesCount = parseInt(document.getElementById('inputTickets').value);
+            const unitPrice = parseInt(document.getElementById('inputPrice').value);
+            
+            // Sync values cleanly down to visual labels
+            document.getElementById('lblTickets').innerText = spacesCount + " Spots";
+            document.getElementById('lblPrice').innerText = "$" + unitPrice;
+            
+            // Apply standard platform execution protocol tax deductions (e.g., 5% system infrastructure routing fee)
+            const projectedYield = Math.floor((spacesCount * unitPrice) * 0.95);
+            document.getElementById('calcPayout').innerText = "$" + projectedYield.toLocaleString();
+        }
+
+        function removeMockNode(elementId) {
+            const node = document.getElementById(elementId);
+            if(node) {
+                node.style.opacity = '0';
+                setTimeout(() => node.remove(), 400);
+            }
+        }
+    </script>
+</body>
+</html>

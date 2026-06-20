@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Join the Waitlist | Private Social Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           COLOR SYSTEM & VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #0B0B12;
+            --surface-color: #14141E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0B0;
+            --text-muted: #64748B;
+            
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --accent: #00F0FF;
+            
+            --glass-bg: rgba(20, 20, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            
+            --grad-purple-pink: linear-gradient(135deg, var(--primary), var(--secondary));
+            --grad-purple-cyan: linear-gradient(135deg, var(--primary), var(--accent));
+            --grad-dark-purple: linear-gradient(180deg, var(--bg-color), #1a1025);
+            
+            --font-main: 'Inter', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* =========================================
+           RESET & GLOBAL OVERFLOW SHIELD
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; }
+        .gradient-text-1 { background: var(--grad-purple-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-text-2 { background: var(--grad-purple-pink); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Background Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.25;
+            z-index: -1;
+            pointer-events: none;
+            max-width: 100vw;
+        }
+
+        /* Nav Header */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 24px 0;
+            z-index: 100;
+            background: rgba(11, 11, 18, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.05em; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; }
+        .logo i { color: var(--accent); font-size: 1.5rem; }
+
+        /* =========================================
+           WAITLIST MAIN CARD LAYOUT
+           ========================================= */
+        .waitlist-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 140px;
+            padding-bottom: 80px;
+            width: 100%;
+        }
+
+        .waitlist-card {
+            width: 100%;
+            max-width: 580px;
+            background: linear-gradient(180deg, rgba(20, 20, 30, 0.6) 0%, rgba(11, 11, 18, 0.8) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 56px 40px;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Live Queue Indicator Badge */
+        .queue-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        .queue-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        .waitlist-card h1 { font-size: 2.8rem; margin-bottom: 16px; }
+        .waitlist-card p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 36px; }
+
+        /* Premium Forms & Inputs */
+        .waitlist-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            z-index: 5;
+        }
+
+        .waitlist-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            padding: 16px 20px 16px 52px;
+            border-radius: 14px;
+            color: #fff;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .waitlist-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 16px rgba(0, 240, 255, 0.1);
+        }
+
+        /* Progress Tracker Bar Components */
+        .survey-progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto 40px;
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+        }
+        .survey-progress-bar::before {
+            content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px;
+            background: #1B1B26; transform: translateY(-50%); z-index: 1;
+        }
+        .survey-progress-fill {
+            position: absolute; top: 50%; left: 0; height: 2px;
+            background: var(--grad-purple-cyan); transform: translateY(-50%); z-index: 2;
+            width: 0%; transition: var(--transition-smooth);
+        }
+        .survey-step-node {
+            width: 28px; height: 28px; border-radius: 50%; background: #14141E;
+            border: 2px solid #232335; display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 700; color: var(--text-muted); position: relative; z-index: 3;
+            transition: var(--transition-smooth);
+        }
+        .survey-step-node.active { border-color: var(--accent); color: var(--accent); background: var(--bg-color); box-shadow: 0 0 10px rgba(0,240,255,0.2); }
+        .survey-step-node.complete { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+        /* Panel Grid Options Switching Engine */
+        .survey-step-panel { display: none; }
+        .survey-step-panel.active { display: flex; flex-direction: column; gap: 12px; }
+
+        .survey-options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; }
+        .survey-choice-card { cursor: pointer; display: block; width: 100%; }
+        .survey-choice-card input[type="radio"] { display: none; }
+        .choice-content {
+            display: flex; align-items: center; gap: 14px; padding: 14px 20px;
+            background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 12px;
+            transition: var(--transition-smooth); color: var(--text-secondary); text-align: left;
+        }
+        .choice-content i { font-size: 1.3rem; color: var(--text-muted); transition: var(--transition-smooth); }
+        .survey-choice-card input[type="radio"]:checked + .choice-content {
+            border-color: var(--accent); background: rgba(0, 240, 255, 0.03); color: #fff;
+        }
+        .survey-choice-card input[type="radio"]:checked + .choice-content i { color: var(--accent); }
+
+        /* Navigation Row Control Blocks */
+        .survey-nav-row { display: flex; justify-content: space-between; margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px; }
+        .btn-step-nav {
+            padding: 12px 28px; border-radius: 100px; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; border: none; font-family: var(--font-main); transition: var(--transition-smooth);
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        .btn-step-nav.primary { background: var(--grad-purple-cyan); color: #fff; box-shadow: 0 4px 14px rgba(139,92,246,0.3); }
+        .btn-step-nav.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(139,92,246,0.4); }
+        .btn-step-nav.secondary { background: transparent; border: 1px solid var(--glass-border); color: var(--text-secondary); }
+        .btn-step-nav.secondary:hover { background: rgba(255,255,255,0.03); color: #fff; }
+
+        /* Post-Submission Success Screen */
+        .success-panel {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: panelFade 0.5s ease forwards;
+        }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================
+           VIRAL REFERRAL MILESTONE ROAD
+           ========================================= */
+        .referral-zone {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 36px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .referral-zone h3 { font-size: 1.1rem; margin-bottom: 20px; text-align: center; color: #fff; }
+
+        .milestone-track {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 12px;
+            padding: 0 10px;
+        }
+
+        .milestone-track::before {
+            content: '';
+            position: absolute;
+            top: 15px; left: 0; right: 0;
+            height: 2px;
+            background: #1B1B26;
+            z-index: 1;
+        }
+
+        .milestone-progress {
+            position: absolute;
+            top: 15px; left: 0;
+            height: 2px;
+            background: var(--grad-purple-cyan);
+            z-index: 2;
+            width: 35%; 
+            transition: width 0.6s ease;
+        }
+
+        .milestone-node {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .node-dot {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: #14141E;
+            border: 2px solid #232335;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .milestone-node.complete .node-dot {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .milestone-node.active .node-dot {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+        }
+
+        .node-lbl { font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* Custom Copy/Share Link Utility Box */
+        .share-link-box {
+            display: flex;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            padding: 6px 6px 6px 16px;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .share-link-box span { font-size: 0.85rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 12px; }
+
+        .copy-btn {
+            background: #14141E;
+            border: 1px solid rgba(255,255,255,0.05);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-family: var(--font-main);
+        }
+        .copy-btn:hover { background: #1b1b2a; color: var(--accent); }
+
+        /* =========================================
+           RESPONSIVE STRUCTURAL OVERRIDES
+           ========================================= */
+        @media (max-width: 576px) {
+            .waitlist-card {
+                padding: 40px 24px;
+                border-radius: 24px;
+            }
+            .waitlist-card h1 { font-size: 2rem; }
+            .waitlist-card p { font-size: 0.95rem; }
+            .node-lbl { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb" style="top: 0; left: 0; width: 400px; height: 400px; background: var(--primary);"></div>
+    <div class="glow-orb" style="bottom: 0; right: 0; width: 400px; height: 400px; background: var(--accent); opacity: 0.15;"></div>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph-fill ph-infinity"></i> Angel Priyanka
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="waitlist-wrapper">
+            <div class="waitlist-card">
+                
+                <div class="queue-badge">
+                    <div class="pulse-dot"></div>
+                    <span><span id="live-counter">24,842</span> Global Members Waiting</span>
+                </div>
+
+                <div id="signup-panel">
+                    <h1>Get Private Access.</h1>
+                    <p style="margin-bottom: 24px;">Complete this brief matching survey to optimize your placement inside our priority invite distribution tiers.</p>
+
+                    <div class="survey-progress-bar">
+                        <div class="survey-progress-fill" id="survey-progress-line"></div>
+                        <div class="survey-step-node active" data-survey-step="1">1</div>
+                        <div class="survey-step-node" data-survey-step="2">2</div>
+                        <div class="survey-step-node" data-survey-step="3">3</div>
+                    </div>
+
+                    <form class="waitlist-form" id="extendedWaitlistForm" onsubmit="processWaitlistSubmission(event)">
+                        
+                        <div class="survey-step-panel active" data-survey-panel="1">
+                            <h2 style="font-size: 1.3rem; margin-bottom: 16px; text-align: left;">Account Information</h2>
+                            <div class="input-group">
+                                <i class="ph ph-user"></i>
+                                <input type="text" class="waitlist-input" required placeholder="Full Name">
+                            </div>
+                            <div class="input-group">
+                                <i class="ph ph-envelope-simple"></i>
+                                <input type="email" class="waitlist-input" required placeholder="Professional Email Address">
+                            </div>
+                        </div>
+
+                        <div class="survey-step-panel" data-survey-panel="2">
+                            <h2 style="font-size: 1.3rem; margin-bottom: 8px; text-align: left;">What are you looking for?</h2>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary); text-align: left; margin-bottom: 16px;">Select the primary experience archetype that aligns with your lifestyle goals.</p>
+                            
+                            <div class="survey-options-grid">
+                                <label class="survey-choice-card">
+                                    <input type="radio" name="archetype" value="founders" required>
+                                    <div class="choice-content">
+                                        <i class="ph ph-briefcase"></i>
+                                        <span>Tech & Founder Circles</span>
+                                    </div>
+                                </label>
+                                <label class="survey-choice-card">
+                                    <input type="radio" name="archetype" value="parties">
+                                    <div class="choice-content">
+                                        <i class="ph ph-sparkles"></i>
+                                        <span>Private Parties & Gatherings</span>
+                                    </div>
+                                </label>
+                                <label class="survey-choice-card">
+                                    <input type="radio" name="archetype" value="culture">
+                                    <div class="choice-content">
+                                        <i class="ph ph-paint-brush-broad"></i>
+                                        <span>Art & Culinary Masterclasses</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="survey-step-panel" data-survey-panel="3">
+                            <h2 style="font-size: 1.3rem; margin-bottom: 8px; text-align: left;">Community Contribution</h2>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary); text-align: left; margin-bottom: 16px;">How frequently do you intend to participate in vetted real-world social gatherings?</p>
+                            
+                            <div class="input-group" style="margin-bottom: 16px;">
+                                <i class="ph ph-calendar-blank"></i>
+                                <select class="waitlist-input" required style="appearance: none; -webkit-appearance: none;">
+                                    <option value="" disabled selected style="background: #14141E;">Select ideal frequency</option>
+                                    <option value="weekly" style="background: #14141E;">Multiple times a week</option>
+                                    <option value="biweekly" style="background: #14141E;">Bi-weekly transitions</option>
+                                    <option value="monthly" style="background: #14141E;">Once a month</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <i class="ph ph-link-simple"></i>
+                                <input type="url" class="waitlist-input" placeholder="Instagram or LinkedIn URL (Optional)">
+                            </div>
+                        </div>
+
+                        <div class="survey-nav-row">
+                            <button type="button" class="btn-step-nav secondary" id="prevSurveyBtn" onclick="navigateSurveySteps(-1)" style="visibility: hidden;">Back</button>
+                            <button type="button" class="btn-step-nav primary" id="nextSurveyBtn" onclick="navigateSurveySteps(1)">Continue</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="success-panel" class="success-panel">
+                    <h2 class="gradient-text-1" style="font-size: 2.2rem; margin-bottom: 12px;">Profile Verified!</h2>
+                    <p style="margin-bottom: 32px;">Your application has been logged into our priority verification queue. Check your placement live down below.</p>
+
+                    <div class="referral-zone">
+                        <h3>Your Live Milestone Track</h3>
+                        <div class="milestone-track">
+                            <div class="milestone-progress" id="progress-line"></div>
+                            <div class="milestone-node complete">
+                                <div class="node-dot"><i class="ph-bold ph-check"></i></div>
+                                <span class="node-lbl">Joined</span>
+                            </div>
+                            <div class="milestone-node active">
+                                <div class="node-dot" id="queue-pos-node">#14K</div>
+                                <span class="node-lbl">Queue Pos</span>
+                            </div>
+                            <div class="milestone-node">
+                                <div class="node-dot">3</div>
+                                <span class="node-lbl">Invite 3</span>
+                            </div>
+                            <div class="milestone-node">
+                                <div class="node-dot"><i class="ph ph-star"></i></div>
+                                <span class="node-lbl">VIP Pass</span>
+                            </div>
+                        </div>
+
+                        <p style="font-size: 0.88rem; color: var(--text-secondary); text-align: center; margin-top: 16px;">
+                            Invite <strong>3 connections</strong> using your referral line to instantly cut past 5,000 slots and unlock immediate app exploration status.
+                        </p>
+
+                        <div class="share-link-box">
+                            <span id="share-url-text">https://angelpriyanka.com/join?ref=user_7428</span>
+                            <button class="copy-btn" onclick="executeLinkCopy()">Copy Link</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentSurveyStep = 1;
+        const absoluteStepsCount = 3;
+
+        function navigateSurveySteps(direction) {
+            if (direction === 1 && !verifyActivePanelRequirements()) return;
+
+            currentSurveyStep += direction;
+            if (currentSurveyStep < 1) currentSurveyStep = 1;
+            if (currentSurveyStep > absoluteStepsCount) currentSurveyStep = absoluteStepsCount;
+
+            // Mutate visibility across distinct panel nodes smoothly
+            document.querySelectorAll('[data-survey-panel]').forEach(panel => panel.classList.remove('active'));
+            document.querySelector(`[data-survey-panel="${currentSurveyStep}"]`).classList.add('active');
+
+            // Sync state indicator icons
+            document.querySelectorAll('.survey-step-node').forEach(node => {
+                const structuralStep = parseInt(node.getAttribute('data-survey-step'));
+                node.classList.remove('active', 'complete');
+                if (structuralStep === currentSurveyStep) node.classList.add('active');
+                else if (structuralStep < currentSurveyStep) node.classList.add('complete');
+            });
+
+            // Update progress tracking fill line length percentages
+            const pathFillPercent = ((currentSurveyStep - 1) / (absoluteStepsCount - 1)) * 100;
+            document.getElementById('survey-progress-line').style.width = `${pathFillPercent}%`;
+
+            // Alter contextual text labels across interactive navigation items
+            const nextBtn = document.getElementById('nextSurveyBtn');
+            const prevBtn = document.getElementById('prevSurveyBtn');
+
+            prevBtn.style.visibility = currentSurveyStep === 1 ? 'hidden' : 'visible';
+            nextBtn.innerText = currentSurveyStep === absoluteStepsCount ? 'Submit Application' : 'Continue';
+            
+            if (currentSurveyStep === absoluteStepsCount) nextBtn.setAttribute('type', 'submit');
+            else nextBtn.setAttribute('type', 'button');
+        }
+
+        function verifyActivePanelRequirements() {
+            const activePanel = document.querySelector(`[data-survey-panel="${currentSurveyStep}"]`);
+            const fields = activePanel.querySelectorAll('input[required], select[required]');
+            let executionStateFlag = true;
+
+            fields.forEach(element => {
+                if (element.type === 'radio') {
+                    const groupChecked = activePanel.querySelector(`input[name="${element.name}"]:checked`);
+                    if (!groupChecked) executionStateFlag = false;
+                } else if (!element.value.trim()) {
+                    element.style.borderColor = 'rgba(236, 72, 153, 0.4)';
+                    executionStateFlag = false;
+                } else {
+                    element.style.borderColor = 'var(--glass-border)';
+                }
+            });
+            return executionStateFlag;
+        }
+
+        function processWaitlistSubmission(event) {
+            event.preventDefault();
+            document.getElementById('signup-panel').style.display = 'none';
+            document.getElementById('success-panel').style.display = 'flex';
+        }
+
+        // Live rolling counter tracking algorithm
+        setInterval(() => {
+            const counterElement = document.getElementById('live-counter');
+            if (counterElement) {
+                let currentCount = parseInt(counterElement.innerText.replace(/,/g, ''));
+                currentCount += Math.floor(Math.random() * 3) + 1;
+                counterElement.innerText = currentCount.toLocaleString();
+            }
+        }, 4000);
+
+        function executeLinkCopy() {
+            const copyText = document.getElementById('share-url-text').innerText;
+            navigator.clipboard.writeText(copyText).then(() => {
+                const copyButton = document.querySelector('.copy-btn');
+                copyButton.innerText = 'Copied!';
+                setTimeout(() => copyButton.innerText = 'Copy Link', 2000);
+            });
+        }
+    </script>
+</body>
+</html>

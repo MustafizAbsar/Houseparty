@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Terms of Service & Legal Shield | Private Social Marketplace</title>
+    <!-- Premium Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           COLOR SYSTEM & VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #0B0B12;
+            --surface-color: #14141E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0B0;
+            --text-muted: #52526b;
+            
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --accent: #00F0FF;
+            --shield-red: #EF4444;
+            
+            --glass-bg: rgba(20, 20, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            
+            --font-main: 'Inter', sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* =========================================
+           RESET & GLOBAL OVERFLOW SHIELD
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+        .gradient-text-red { background: linear-gradient(135deg, #fff 30%, var(--shield-red) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Navigation Header */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 24px 0;
+            z-index: 100;
+            background: rgba(11, 11, 18, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.05em; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; }
+        .logo i { color: var(--accent); font-size: 1.5rem; }
+
+        /* =========================================
+           LEGAL HEADER LAYOUT
+           ========================================= */
+        .legal-header {
+            padding-top: 160px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 60px;
+        }
+        .legal-header h1 { font-size: 3.5rem; margin-bottom: 16px; }
+        .legal-meta { display: flex; gap: 24px; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
+        .legal-meta span strong { color: var(--accent); }
+
+        /* =========================================
+           DISCLAIMER INTRO PANEL (THE SHIELD)
+           ========================================= */
+        .liability-shield-banner {
+            background: rgba(239, 68, 68, 0.04);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 32px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            text-align: left;
+        }
+        .liability-shield-banner i { font-size: 2.5rem; color: var(--shield-red); flex-shrink: 0; }
+        .liability-shield-banner h3 { color: var(--shield-red); margin-bottom: 8px; font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .liability-shield-banner p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        /* =========================================
+           SPLIT NAVIGATION AND CONTENT COLUMN SYSTEM
+           ========================================= */
+        .legal-split {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 60px;
+            align-items: flex-start;
+            padding-bottom: 120px;
+        }
+
+        /* Sidebar Index Sticky Tree */
+        .legal-sidebar {
+            position: sticky;
+            top: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+        }
+        .sidebar-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .sidebar-link.active {
+            color: var(--accent);
+            background: rgba(0, 240, 255, 0.05);
+            border-color: rgba(0, 240, 255, 0.15);
+            font-weight: 600;
+        }
+
+        /* Content Document Frame */
+        .legal-body {
+            text-align: left;
+        }
+        .legal-section {
+            padding-bottom: 56px;
+            margin-bottom: 56px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .legal-section:last-child { border-bottom: none; }
+        .legal-section h2 { font-size: 2rem; margin-bottom: 24px; color: #fff; scroll-margin-top: 140px; }
+        .legal-section p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 20px; }
+        
+        /* Highlight Protective Clauses Box */
+        .clause-callout-box {
+            background: var(--surface-color);
+            border-left: 4px solid var(--primary);
+            padding: 24px;
+            border-radius: 0 16px 16px 0;
+            margin: 24px 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        /* Mobile Dropdown Menu Selector Alternative */
+        .mobile-legal-nav {
+            display: none;
+            width: 100%;
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 16px;
+            border-radius: 12px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            outline: none;
+        }
+
+        /* Footer Frame Matrix */
+        footer { border-top: 1px solid var(--glass-border); padding: 80px 0 40px; background: #06060A; font-size: 0.9rem; }
+        .footer-matrix { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 60px; }
+        .footer-column h4 { color: #fff; margin-bottom: 24px; font-weight: 600; }
+        .footer-column ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .footer-column ul li a { color: var(--text-secondary); text-decoration: none; transition: 0.2s; }
+        .footer-column ul li a:hover { color: var(--accent); }
+        .footer-baseline { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; display: flex; justify-content: space-between; color: var(--text-muted); flex-wrap: wrap; gap: 16px; }
+
+        /* =========================================
+           RESPONSIVE STYLES & OVERFLOW FIXES
+           ========================================= */
+        @media (max-width: 992px) {
+            .legal-header h1 { font-size: 2.6rem; }
+            .legal-split { grid-template-columns: 1fr; gap: 0; }
+            .legal-sidebar { display: none; }
+            .mobile-legal-nav { display: block; }
+            .footer-matrix { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+        @media (max-width: 576px) {
+            .legal-header h1 { font-size: 2rem; }
+            .liability-shield-banner { flex-direction: column; gap: 16px; padding: 24px; }
+            .legal-meta { flex-direction: column; gap: 8px; }
+            .footer-matrix { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph-fill ph-infinity"></i> Angel Priyanka
+            </a>
+        </div>
+    </nav>
+
+    <!-- CORE CONTENT WRAPPER -->
+    <main class="container">
+        
+        <!-- HEADER SPECIFICATIONS -->
+        <header class="legal-header">
+            <h1 class="gradient-text-red">Platform Legal Center</h1>
+            <div class="legal-meta">
+                <span>Version Protocol: <strong>2026.1</strong></span>
+                <span>Effective Date: <strong>June 19, 2026</strong></span>
+            </div>
+        </header>
+
+        <!-- LIABILITY SHIELD CALLOUT BANNER -->
+        <div class="liability-shield-banner">
+            <i class="ph-fill ph-shield-warning"></i>
+            <div>
+                <h3>Crucial Legal Disclaimer: Real-World Interaction Protection</h3>
+                <p>This platform acts strictly as a decentralized communication matching infrastructure layer. By using this service, you explicitly acknowledge that Angel Priyanka Inc. exercises zero ownership, validation control, or operation over physical parties, real-world events, host venues, or attendee actions. You gather entirely at your own discretion and risk.</p>
+            </div>
+        </div>
+
+        <!-- MOBILE INDEX NAV SELECTOR Dropdown alternative -->
+        <select class="mobile-legal-nav" onchange="scrollToSection(this.value)">
+            <option value="marketplace-role">1. Marketplace Ecosystem Role</option>
+            <option value="risk-assumption">2. Absolute Assumption of Risk</option>
+            <option value="liability-limitation">3. Total Limitation of Liability</option>
+            <option value="indemnification">4. Host & Attendee Indemnification</option>
+            <option value="dispute-resolution">5. Governing Law & Arbitration</option>
+            <option value="privacy">6. Privacy Policy & Vetting Data</option>
+            <option value="cookies">7. Cookie Policy & Local Storage</option>
+        </select>
+
+        <!-- TWO COLUMN LAYOUT CORE COMPONENT -->
+        <div class="legal-split">
+            
+            <!-- STICKY SIDEBAR NAVIGATION TREE -->
+            <aside class="legal-sidebar">
+                <a href="#marketplace-role" class="sidebar-link active">1. Marketplace Role</a>
+                <a href="#risk-assumption" class="sidebar-link">2. Assumption of Risk</a>
+                <a href="#liability-limitation" class="sidebar-link">3. Limitation of Liability</a>
+                <a href="#indemnification" class="sidebar-link">4. Indemnification</a>
+                <a href="#dispute-resolution" class="sidebar-link">5. Governing Law</a>
+                <a href="#privacy" class="sidebar-link">6. Privacy Policy</a>
+                <a href="#cookies" class="sidebar-link">7. Cookie Policy</a>
+            </aside>
+
+            <!-- LEGAL CLAUSE TEXT BODY CONTENT -->
+            <article class="legal-body">
+                
+                <!-- SECTION 1 -->
+                <section id="marketplace-role" class="legal-section">
+                    <h2>1. Marketplace Ecosystem Role</h2>
+                    <p>Angel Priyanka Inc. (hereafter referenced as the "Platform") provides software architecture that allows independent event planners, creators, and venues ("Hosts") to post, organize, and manage physical social gatherings, and allows registered platform members ("Attendees") to request entry tickets to such experiences.</p>
+                    <p>The Platform is not an event organizer, broker, insurance pool, or safety supervisor. We maintain absolutely no employer, partner, or joint-venture relationships with any host or registered member utilizing our service infrastructure.</p>
+                </section>
+
+                <!-- SECTION 2: THE CRITICAL LIABILITY PILLAR -->
+                <section id="risk-assumption" class="legal-section">
+                    <h2>2. Absolute Assumption of Risk</h2>
+                    <p>By browsing, booking, or physically entering any gathering posted through our ecosystem infrastructure layers, you explicitly agree to the following terms:</p>
+                    <div class="clause-callout-box">
+                        ATTENDEES ASSUME ENTIRE RISK ASSOCIATED WITH PHYSICAL INJURY, LOSS, THEFT, OR DAMAGE ENCOUNTERED DURING REAL-WORLD EXPERIENCES.
+                    </div>
+                    <p>You acknowledge that physical events carry inherent, unpredictable human risks, including but not limited to body harm, personal friction, disease vectors, or behavioral altercations. You declare that you are choosing to participate entirely voluntarily with absolute knowledge of these liability terms.</p>
+                </section>
+
+                <!-- SECTION 3: CORE LIABILITY PROTECTION SHIELD -->
+                <section id="liability-limitation" class="legal-section">
+                    <h2>3. Total Limitation of Liability</h2>
+                    <p>To the absolute threshold permissible under applicable jurisdictional laws, Angel Priyanka Inc., alongside its corporate executives, shareholders, employees, or tech partners, shall not be held liable under any condition for direct, secondary, punitive, accidental, or special damages originating from or connected to the following scenarios:</p>
+                    <p style="padding-left: 20px; border-left: 2px solid var(--text-muted);">
+                        • The physical conduct, negligence, omissions, or criminal actions of any host, venue vendor, or platform attendee.<br>
+                        • The explicit cancellation, spot adjustments, code adjustments, or location rescheduling of any posted gathering.<br>
+                        • Content accuracy, rating index values, or verification badges mapped across individual registry feeds inside our system.
+                    </p>
+                    <p>In no event shall the total legal aggregate liability of the Platform surpass the total cash volumes routed by you through our system infrastructure layer during the exact 30-day window directly preceding the claim file.</p>
+                </section>
+
+                <!-- SECTION 4: THE INDEMNIFICATION WALL -->
+                <section id="indemnification" class="legal-section">
+                    <h2>4. Host & Attendee Indemnification</h2>
+                    <p>You agree to fully defend, protect, insulate, and hold harmless Angel Priyanka Inc. from any third-party legal claims, operational financial losses, damage awards, regulatory costs, or litigation legal fees originating from your use of our platform layer.</p>
+                    <p>This includes any active breaches of our structural terms of conduct, physical venue property destruction, statutory rule adjustments violated by you at real-world coordinates, or conflicts occurring between hosts and attendees.</p>
+                </section>
+
+                <!-- SECTION 5: JURISDICTIONAL ARBITRATION RULES -->
+                <section id="dispute-resolution" class="legal-section">
+                    <h2>5. Governing Law & Arbitration</h2>
+                    <p>These terms of service, alongside any system transaction, profile dispute, or legal conflict, are strictly regulated under the domestic jurisdiction of Delaware, USA, completely disregarding structural conflict-of-law rule exceptions.</p>
+                    <p>Any emerging legal claim or platform dispute shall be exclusively resolved through final, binding individual arbitration administered via the American Arbitration Association (AAA), rather than pushing files into standard courtroom grid frameworks. Class-action legal litigation cases are completely barred under this system signature framework.</p>
+                </section>
+
+                <!-- SECTION 6: PRIVACY POLICY DISCLOSURE -->
+                <section id="privacy" class="legal-section">
+                    <h2>6. Privacy Policy & Data Protection</h2>
+                    <p>We process foundational access metrics, biometrics telemetry securely bound during registration, and geolocation tracking attributes strictly to initialize event compliance loops and safeguard network verification pipelines.</p>
+                    <p>We do not broker, distribute, or exchange private identifier logs with secondary marketing advertising agencies under any conditions. All telemetry data is stored in bank-grade encrypted cloud partitions.</p>
+                </section>
+
+                <!-- SECTION 7: COOKIE POLICY DISCLOSURE -->
+                <section id="cookies" class="legal-section">
+                    <h2>7. Cookie Policy & Local Storage</h2>
+                    <p>Our infrastructure uses structural system cookies and browser local storage trees exclusively to maintain hardware login token persistence, track multi-step form progression states, and remember active panel selections securely.</p>
+                    <p>By interacting with our directory explorer or submitting access requests, you agree to allow our software to house these high-security local configuration data blocks on your machine.</p>
+                </section>
+
+            </article>
+
+        </div>
+    </main>
+
+    <!-- FOOTER MATRIX -->
+    <footer>
+        <div class="container">
+            <div class="footer-matrix">
+                <div class="footer-column">
+                    <a href="#" class="brand-logo" style="margin-bottom:16px;"><i class="ph-fill ph-infinity"></i> Angel Priyanka</a>
+                    <p style="color:var(--text-secondary); max-width:260px;">The premier ecosystem for trusted physical experiences and authentic community growth models.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Ecosystem Hub</h4>
+                    <ul>
+                        <li><a href="index.html">Explore Feed</a></li>
+                        <li><a href="host.html">Verify Host Status</a></li>
+                        <li><a href="join.html">Waitlist Queue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Infrastructure</h4>
+                    <ul>
+                        <li><a href="trust.html">Safety & Vetting Center</a></li>
+                        <li><a href="#">Security Thresholds</a></li>
+                        <li><a href="#">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Governance</h4>
+                    <ul>
+                        <li><a href="#">User Privacy Commitments</a></li>
+                        <li><a href="terms.html">Platform Terms</a></li>
+                        <li><a href="#">Code of Conduct</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-baseline">
+                <div>&copy; 2026 Angel Priyanka Inc. All rights reserved globally.</div>
+                <div style="display:flex; gap:16px; font-size:1.2rem;">
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-twitter-logo"></i></a>
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-linkedin-logo"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTION CONTROLLER ANIMATION SCRIPTS -->
+    <script>
+        // High efficiency scroll spy to highlight active document sections inside desktop sidebar tracker
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.legal-section');
+            const navLinks = document.querySelectorAll('.sidebar-link');
+            let currentActiveId = "";
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 160) {
+                    currentActiveId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentActiveId}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Dropdown/Anchor deep link menu handler script logic
+        function scrollToSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 120,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Handle direct incoming deep links from footer hashes on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash) {
+                setTimeout(() => scrollToSection(initialHash), 200);
+            }
+        });
+    </script>
+</body>
+</html>

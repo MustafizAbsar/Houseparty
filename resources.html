@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Resources & Help Hub | Private Social Marketplace</title>
+    <!-- Premium Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           COLOR SYSTEM & VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #0B0B12;
+            --surface-color: #14141E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0B0;
+            --text-muted: #64748B;
+            
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --accent: #00F0FF;
+            
+            --glass-bg: rgba(20, 20, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            
+            --grad-purple-cyan: linear-gradient(135deg, var(--primary), var(--accent));
+            --grad-purple-pink: linear-gradient(135deg, var(--primary), var(--secondary));
+            
+            --font-main: 'Inter', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* =========================================
+           RESET & GLOBAL OVERFLOW SHIELD
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .text-center { text-align: center; }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; }
+        .gradient-text-1 { background: var(--grad-purple-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Background Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.2;
+            z-index: -1;
+            pointer-events: none;
+            max-width: 100vw;
+        }
+
+        /* Nav Header */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 24px 0;
+            z-index: 100;
+            background: rgba(11, 11, 18, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.05em; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; }
+        .logo i { color: var(--accent); font-size: 1.5rem; }
+
+        /* =========================================
+           HERO SELECTION MENU
+           ========================================= */
+        .resources-hero {
+            padding-top: 160px;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+        .resources-hero h1 { font-size: 3.5rem; margin-bottom: 32px; }
+
+        .tab-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 6px;
+            border-radius: 100px;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .resource-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 100px;
+            white-space: nowrap;
+            font-family: var(--font-main);
+            transition: var(--transition-smooth);
+        }
+        .resource-tab.active {
+            background: var(--surface-color);
+            color: var(--accent);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .resource-panel { display: none; }
+        .resource-panel.active { display: block; }
+
+        /* =========================================
+           PANEL 1: HOST GUIDELINES
+           ========================================= */
+        .playbook-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 40px;
+        }
+        .playbook-card {
+            background: var(--surface-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: left;
+            transition: var(--transition-smooth);
+        }
+        .playbook-card:hover { border-color: var(--primary); }
+        .playbook-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; display: block; }
+        .playbook-card h3 { font-size: 1.4rem; margin-bottom: 12px; }
+        .playbook-card p { color: var(--text-secondary); font-size: 0.98rem; margin-bottom: 24px; }
+        .download-action-btn {
+            display: inline-flex; align-items: center; gap: 8px; color: var(--accent);
+            font-weight: 600; text-decoration: none; font-size: 0.95rem;
+        }
+        .download-action-btn:hover { text-decoration: underline; }
+
+        /* =========================================
+           PANEL 2: HELP CENTER FAQ SEARCH
+           ========================================= */
+        .search-container {
+            max-width: 540px; margin: 0 auto 48px; position: relative;
+        }
+        .search-container i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.3rem; }
+        .search-input {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            padding: 16px 20px 16px 54px; border-radius: 14px; color: #fff; font-family: var(--font-main);
+            font-size: 1rem; transition: var(--transition-smooth);
+        }
+        .search-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 15px rgba(0,240,255,0.1); }
+
+        .help-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .help-topic-card {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 32px; text-align: left; cursor: pointer; transition: var(--transition-smooth);
+        }
+        .help-topic-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .help-topic-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+        .help-topic-card p { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* =========================================
+           PANEL 3: COMMUNITY RULES
+           ========================================= */
+        .rules-stack { max-width: 800px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 16px; }
+        .rule-node {
+            background: var(--surface-color); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 24px 32px; display: flex; gap: 24px; align-items: flex-start; text-align: left;
+        }
+        .rule-node i { font-size: 2rem; color: var(--secondary); flex-shrink: 0; }
+        .rule-node h3 { font-size: 1.3rem; margin-bottom: 6px; }
+        .rule-node p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        /* Footer Matrix */
+        footer { border-top: 1px solid var(--glass-border); padding: 80px 0 40px; background: #06060A; font-size: 0.9rem; }
+        .footer-matrix { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 60px; }
+        .footer-column h4 { color: #fff; margin-bottom: 24px; font-weight: 600; }
+        .footer-column ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .footer-column ul li a { color: var(--text-secondary); text-decoration: none; transition: 0.2s; }
+        .footer-column ul li a:hover { color: var(--accent); }
+        .footer-baseline { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; display: flex; justify-content: space-between; color: var(--text-muted); flex-wrap: wrap; gap: 16px; }
+
+        /* =========================================
+           RESPONSIVE STYLES & OVERFLOW FIXES
+           ========================================= */
+        @media (max-width: 992px) {
+            .resources-hero h1 { font-size: 2.8rem; }
+            .playbook-grid, .help-grid { grid-template-columns: 1fr; gap: 24px; }
+            .footer-matrix { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+        @media (max-width: 768px) {
+            .tab-row { flex-direction: column; border-radius: 16px; padding: 8px; }
+            .resource-tab { width: 100%; padding: 10px; }
+            .rule-node { flex-direction: column; gap: 12px; padding: 24px; }
+        }
+        @media (max-width: 480px) {
+            .resources-hero h1 { font-size: 2.2rem; }
+            .footer-matrix { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Grid Lighting System Orbs -->
+    <div class="glow-orb" style="top: 0; left: 10%; width: 450px; height: 450px; background: var(--primary);"></div>
+    <div class="glow-orb" style="bottom: 10%; right: 0; width: 400px; height: 400px; background: var(--accent); opacity: 0.15;"></div>
+
+    <!-- Navigation Header -->
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph-fill ph-infinity"></i> Angel Priyanka
+            </a>
+        </div>
+    </nav>
+
+    <!-- CORE HERO SELECTION LAYER -->
+    <header class="container resources-hero">
+        <h1 class="gradient-text-1">Resources & Support Hub</h1>
+        
+        <div class="tab-row">
+            <button class="resource-tab active" onclick="switchResourcePanel(this, 'guidelines')">Host Guidelines</button>
+            <button class="resource-tab" onclick="switchResourcePanel(this, 'help')">Help Center</button>
+            <button class="resource-tab" onclick="switchResourcePanel(this, 'rules')">Community Rules</button>
+        </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE HUB VIEWPORT -->
+    <main class="container" style="min-height: 60vh;">
+        
+        <!-- PANEL 1: HOST GUIDELINES -->
+        <div id="panel-guidelines" class="resource-panel active section-padding">
+            <div class="playbook-grid">
+                <div class="playbook-card">
+                    <i class="ph ph-book-open"></i>
+                    <h3>Ecosystem Host Playbook</h3>
+                    <p>Unlock our operational framework detailing signature event structure setup, ticket tiers calibration, and automated waitlist filter management tricks.</p>
+                    <a href="#" class="download-action-btn" onclick="event.preventDefault(); alert('Playbook generation download protocol initialized.');"><i class="ph ph-download-simple"></i> Download Playbook Asset (PDF)</a>
+                </div>
+                <div class="playbook-card">
+                    <i class="ph ph-shield-star"></i>
+                    <h3>Vetting & Identity Criteria</h3>
+                    <p>Review necessary legal verification, background profile configurations, and identification parameters mandatory to scale up account limits smoothly.</p>
+                    <a href="#" class="download-action-btn" onclick="event.preventDefault(); alert('Vetting manual download protocol initialized.');"><i class="ph ph-download-simple"></i> Download Criteria Documentation</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 2: HELP CENTER FAQ ARCHITECTURE -->
+        <div id="panel-help" class="resource-panel section-padding">
+            <div class="search-container">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" class="search-input" placeholder="Search support documents, terminal tokens, payouts..." oninput="console.log('Filtering query logs...')">
+            </div>
+            <div class="help-grid">
+                <div class="help-topic-card" onclick="switchResourcePanel(document.querySelectorAll('.resource-tab')[0], 'guidelines')">
+                    <h3>Host Operations</h3>
+                    <p>How to schedule recurring event tickets and initialize programmatic settlement payouts.</p>
+                </div>
+                <div class="help-topic-card" onclick="window.location.href = 'trust.html'">
+                    <h3>Account Verification</h3>
+                    <p>Resolving unexpected KYC document scanning blockages or biometric matching failures.</p>
+                </div>
+                <div class="help-topic-card" onclick="window.location.href = 'about.html#contact'">
+                    <h3>Direct Support Desk</h3>
+                    <p>Open an encrypted service ticket directly with our centralized global marketplace engineering team.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 3: COMMUNITY RULES MATRIX -->
+        <div id="panel-rules" class="resource-panel section-padding">
+            <div class="rules-stack">
+                <div class="rule-node">
+                    <i class="ph ph-hand-eye"></i>
+                    <div>
+                        <h3>Absolute Safety & Consent First</h3>
+                        <p>Any non-consensual capture of guest media data or invasive behavioral patterns triggers immediate, permanent account node termination across all hardware devices.</p>
+                    </div>
+                </div>
+                <div class="rule-node">
+                    <i class="ph ph-signature"></i>
+                    <div>
+                        <h3>Honest Experience Blueprinting</h3>
+                        <p>Hosts must deploy transparent operational descriptions. Intentionally falsifying local inventory structures or guest inclusions triggers immediate capital escrow clawbacks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER MATRIX LINK SYSTEM -->
+    <footer>
+        <div class="container">
+            <div class="footer-matrix">
+                <div class="footer-column">
+                    <a href="#" class="brand-logo" style="margin-bottom:16px;"><i class="ph-fill ph-infinity"></i> Angel Priyanka</a>
+                    <p style="color:var(--text-secondary); max-width:260px;">The premier ecosystem for trusted physical experiences and authentic community growth models.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Ecosystem Hub</h4>
+                    <ul>
+                        <li><a href="index.html">Explore Feed</a></li>
+                        <li><a href="host.html">Verify Host Status</a></li>
+                        <li><a href="join.html">Waitlist Queue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Infrastructure</h4>
+                    <ul>
+                        <li><a href="trust.html">Safety & Vetting Center</a></li>
+                        <li><a href="#">Security Thresholds</a></li>
+                        <li><a href="#">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Governance</h4>
+                    <ul>
+                        <li><a href="#">User Privacy Commitments</a></li>
+                        <li><a href="terms.html">Platform Terms</a></li>
+                        <li><a href="#">Code of Conduct</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-baseline">
+                <div>&copy; 2026 Angel Priyanka Inc. All rights reserved globally.</div>
+                <div style="display:flex; gap:16px; font-size:1.2rem;">
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-twitter-logo"></i></a>
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-linkedin-logo"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE MENU SWITCHING SCRIPT MODULE -->
+    <script>
+        function switchResourcePanel(tabElement, panelKey) {
+            if (!tabElement) return;
+
+            // Shift active style metrics cleanly
+            document.querySelectorAll('.resource-tab').forEach(tab => tab.classList.remove('active'));
+            tabElement.classList.add('active');
+
+            // Swap viewport visibility nodes safely
+            document.querySelectorAll('.resource-panel').forEach(panel => panel.classList.remove('active'));
+            
+            const targetPanel = document.getElementById(`panel-${panelKey}`);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+            window.location.hash = panelKey;
+        }
+
+        // Expanded router to catch cross-page incoming deep links cleanly
+        function routeResourceHash(panelKey) {
+            const tabs = document.querySelectorAll('.resource-tab');
+            let matchedTab = null;
+            
+            tabs.forEach(tab => {
+                if (tab.getAttribute('onclick').includes(`'${panelKey}'`)) {
+                    matchedTab = tab;
+                }
+            });
+            
+            if (matchedTab) {
+                switchResourcePanel(matchedTab, panelKey);
+            }
+        }
+
+        // Initializer to catch landing hashes on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const URLHash = window.location.hash.replace('#', '');
+            if (URLHash) {
+                setTimeout(() => routeResourceHash(URLHash), 150);
+            }
+        });
+    </script>
+</body>
+</html>

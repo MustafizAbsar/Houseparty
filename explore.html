@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Explore Private Experiences | Private Social Marketplace</title>
+    <!-- Premium Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           COLOR SYSTEM & VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #0B0B12;
+            --surface-color: #14141E;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0B0;
+            --text-muted: #64748B;
+            
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --accent: #00F0FF;
+            
+            --glass-bg: rgba(20, 20, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-highlight: rgba(255, 255, 255, 0.15);
+            
+            --grad-purple-pink: linear-gradient(135deg, var(--primary), var(--secondary));
+            --grad-purple-cyan: linear-gradient(135deg, var(--primary), var(--accent));
+            
+            --font-main: 'Inter', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* =========================================
+           RESET & GLOBAL OVERFLOW SHIELD
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; }
+        .gradient-text-1 { background: var(--grad-purple-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Nav Header */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 24px 0;
+            z-index: 100;
+            background: rgba(11, 11, 18, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.05em; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; }
+        .logo i { color: var(--accent); font-size: 1.5rem; }
+
+        /* Background Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.2;
+            z-index: -1;
+            pointer-events: none;
+            max-width: 100vw;
+        }
+
+        /* =========================================
+           DIRECTORY HEADER & FILTER SECTION
+           ========================================= */
+        .explore-header {
+            padding-top: 160px;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+        .explore-header h1 { font-size: 3.5rem; margin-bottom: 16px; }
+        .explore-header p { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 40px; }
+
+        /* Filter Row Config */
+        .filter-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            width: 100%;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+        .filter-row::-webkit-scrollbar { display: none; } /* Hide scrollbar for Chrome/Safari */
+
+        .filter-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+        }
+        .filter-pill:hover { border-color: var(--glass-highlight); color: #fff; }
+        .filter-pill.active {
+            background: var(--surface-color);
+            color: var(--accent);
+            border-color: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+        }
+
+        /* =========================================
+           DIRECTORY MASONRY GRID & CARDS
+           ========================================= */
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            padding-top: 40px;
+            padding-bottom: 120px;
+        }
+
+        .event-card {
+            background: linear-gradient(180deg, rgba(20, 20, 30, 0.4) 0%, rgba(11, 11, 18, 0.6) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            text-align: left;
+        }
+        .event-card:hover {
+            border-color: var(--glass-highlight);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Geometric Card Image Placeholder with Pattern Gradients */
+        .event-cover-graphic {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(45deg, #141424 0%, #1f1135 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .event-cover-graphic i { font-size: 3.5rem; color: rgba(255,255,255,0.05); }
+
+        /* Dynamic Status Badges inside cover */
+        .card-badge-row {
+            position: absolute;
+            top: 20px; left: 20px; right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status-badge {
+            background: rgba(11, 11, 18, 0.8);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .status-badge.spots-left { color: var(--accent); border-color: rgba(0, 240, 255, 0.2); }
+        .status-badge.vetted-host { color: var(--primary); border-color: rgba(139, 92, 246, 0.2); display: flex; align-items: center; gap: 4px; }
+
+        /* Card Text Padding */
+        .event-card-body {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .event-meta-line {
+            display: flex;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .event-meta-line span { display: flex; align-items: center; gap: 6px; }
+        .event-meta-line i { color: var(--primary); }
+
+        .event-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: #fff; line-height: 1.3; }
+        .event-card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 24px; flex: 1; }
+
+        /* Form Apply Button Style */
+        .apply-card-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .event-card:hover .apply-card-btn {
+            background: var(--grad-purple-cyan);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Footer Element */
+        footer { border-top: 1px solid var(--glass-border); padding: 80px 0 40px; background: #06060A; font-size: 0.9rem; }
+        .footer-matrix { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 60px; }
+        .footer-column h4 { color: #fff; margin-bottom: 24px; font-weight: 600; }
+        .footer-column ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .footer-column ul li a { color: var(--text-secondary); text-decoration: none; transition: 0.2s; }
+        .footer-column ul li a:hover { color: var(--accent); }
+        .footer-baseline { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; display: flex; justify-content: space-between; color: var(--text-muted); flex-wrap: wrap; gap: 16px; }
+
+        /* =========================================
+           RESPONSIVE STYLES & OVERFLOW FIXES
+           ========================================= */
+        @media (max-width: 1024px) {
+            .directory-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        }
+        @media (max-width: 768px) {
+            .explore-header h1 { font-size: 2.8rem; }
+            .directory-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+            .filter-row { justify-content: flex-start; padding-left: 4px; }
+            .footer-matrix { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+        @media (max-width: 480px) {
+            .explore-header h1 { font-size: 2.2rem; }
+            .footer-matrix { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Grid Lighting System Orbs -->
+    <div class="glow-orb" style="top: 0; left: 10%; width: 500px; height: 500px; background: var(--primary);"></div>
+    <div class="glow-orb" style="bottom: 20%; right: -10%; width: 450px; height: 450px; background: var(--secondary); opacity: 0.15;"></div>
+
+    <!-- Navigation Header -->
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ph-fill ph-infinity"></i> Angel Priyanka
+            </a>
+        </div>
+    </nav>
+
+    <!-- DIRECTORY HEADER -->
+    <header class="container explore-header">
+        <h1 class="gradient-text-1">Extraordinary Gatherings.</h1>
+        <p>Browse upcoming private social events, invite-only mixers, and niche community assemblies happening across the ecosystem network nodes.</p>
+        
+        <!-- Filter Category Tabs Selector Row -->
+        <div class="filter-row">
+            <button class="filter-pill active" onclick="filterToggle(this, 'all')">All System Feeds</button>
+            <button class="filter-pill" onclick="filterToggle(this, 'founders')">Founders & Tech</button>
+            <button class="filter-pill" onclick="filterToggle(this, 'parties')">Private Gatherings</button>
+            <button class="filter-pill" onclick="filterToggle(this, 'masterclasses')">Masterclasses</button>
+        </div>
+    </header>
+
+    <!-- MAIN GRID DIRECTORY FEED MODULE -->
+    <main class="container">
+        <div class="directory-grid">
+            
+            <!-- CARD 1: FOUNDERS -->
+            <div class="event-card" data-category="founders">
+                <div class="event-cover-graphic" style="background: linear-gradient(135deg, #161233 0%, #0d283d 100%);">
+                    <i class="ph ph-cpu"></i>
+                    <div class="card-badge-row">
+                        <div class="status-badge spots-left">4 Slots Left</div>
+                        <div class="status-badge vetted-host"><i class="ph-fill ph-seal-check"></i> Vetted Host</div>
+                    </div>
+                </div>
+                <div class="event-card-body">
+                    <div class="event-meta-line">
+                        <span><i class="ph ph-calendar-blank"></i> June 26, 2026</span>
+                        <span><i class="ph ph-map-pin"></i> Silicon Valley Hub</span>
+                    </div>
+                    <h3>Venture Core Mixer</h3>
+                    <p>An elite collection of late-stage founders, angel investors, and deep tech operators gathered for unfiltered roadmap dialogue rows.</p>
+                    <button class="apply-card-btn" onclick="triggerAppRoute()">Request System Invitation <i class="ph ph-arrow-up-right"></i></button>
+                </div>
+            </div>
+
+            <!-- CARD 2: PARTIES -->
+            <div class="event-card" data-category="parties">
+                <div class="event-cover-graphic" style="background: linear-gradient(135deg, #2a1122 0%, #170d2b 100%);">
+                    <i class="ph ph-vinyl-record"></i>
+                    <div class="card-badge-row">
+                        <div class="status-badge spots-left">12 Spots Left</div>
+                        <div class="status-badge vetted-host"><i class="ph-fill ph-seal-check"></i> Vetted Host</div>
+                    </div>
+                </div>
+                <div class="event-card-body">
+                    <div class="event-meta-line">
+                        <span><i class="ph ph-calendar-blank"></i> June 28, 2026</span>
+                        <span><i class="ph ph-map-pin"></i> Secret Penthouse</span>
+                    </div>
+                    <h3>Acoustic Rooftop Sessions</h3>
+                    <p>An underground high-end dynamic listening experience curated under ambient environments with select local electronic artists.</p>
+                    <button class="apply-card-btn" onclick="triggerAppRoute()">Request System Invitation <i class="ph ph-arrow-up-right"></i></button>
+                </div>
+            </div>
+
+            <!-- CARD 3: MASTERCLASSES -->
+            <div class="event-card" data-category="masterclasses">
+                <div class="event-cover-graphic" style="background: linear-gradient(135deg, #11241f 0%, #151d14 100%);">
+                    <i class="ph ph-chef-hat"></i>
+                    <div class="card-badge-row">
+                        <div class="status-badge spots-left" style="color: #ffbd2e; border-color: rgba(255,189,46,0.2);">Queue Full</div>
+                        <div class="status-badge vetted-host"><i class="ph-fill ph-seal-check"></i> Vetted Host</div>
+                    </div>
+                </div>
+                <div class="event-card-body">
+                    <div class="event-meta-line">
+                        <span><i class="ph ph-calendar-blank"></i> July 02, 2026</span>
+                        <span><i class="ph ph-map-pin"></i> Culinary Atelier</span>
+                    </div>
+                    <h3>Omakase Tasting Laboratory</h3>
+                    <p>A closed-door premium gastronomic journey unpacking experimental fermentation frameworks and rare culinary pairings.</p>
+                    <button class="apply-card-btn" onclick="triggerAppRoute()">Request System Invitation <i class="ph ph-arrow-up-right"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER LINK MATRIX -->
+    <footer>
+        <div class="container">
+            <div class="footer-matrix">
+                <div class="footer-column">
+                    <a href="#" class="brand-logo" style="margin-bottom:16px;"><i class="ph-fill ph-infinity"></i> Angel Priyanka</a>
+                    <p style="color:var(--text-secondary); max-width:260px;">The premier ecosystem for trusted physical experiences and authentic community growth models.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Ecosystem Hub</h4>
+                    <ul>
+                        <li><a href="index.html">Explore Feed</a></li>
+                        <li><a href="host.html">Verify Host Status</a></li>
+                        <li><a href="join.html">Waitlist Queue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Infrastructure</h4>
+                    <ul>
+                        <li><a href="trust.html">Safety & Vetting Center</a></li>
+                        <li><a href="#">Security Thresholds</a></li>
+                        <li><a href="#">System Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Governance</h4>
+                    <ul>
+                        <li><a href="#">User Privacy Commitments</a></li>
+                        <li><a href="terms.html">Platform Terms</a></li>
+                        <li><a href="#">Code of Conduct</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-baseline">
+                <div>&copy; 2026 Angel Priyanka Inc. All rights reserved globally.</div>
+                <div style="display:flex; gap:16px; font-size:1.2rem;">
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-twitter-logo"></i></a>
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-linkedin-logo"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIC SYSTEM SCRIPT RUNNERS -->
+    <script>
+        // High efficiency client-side filter engine parameters switching
+        function filterToggle(element, categoryKey) {
+            // Shift pill selector classes cleanly
+            document.querySelectorAll('.filter-pill').forEach(pill => pill.classList.remove('active'));
+            element.classList.add('active');
+
+            // Toggle card layout visibility nodes smoothly
+            document.querySelectorAll('.event-card').forEach(card => {
+                if(categoryKey === 'all' || card.getAttribute('data-category') === categoryKey) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // App-down routes redirection safety checks handler
+        function triggerAppRoute() {
+            // Forward browsers to the interactive access form queue cleanly
+            window.location.href = 'join.html';
+        }
+    </script>
+</body>
+</html>

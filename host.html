@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Become a Host | Nexus Ecosystem</title>
+    <!-- Premium Google Fonts: Inter for crisp UI readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons for an elegant, streamlined SaaS visual engine -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* ==========================================================================
+           COLOR SYSTEM & ARCHITECTURAL UTILITIES
+           ========================================================================== */
+        :root {
+            --bg-color: #0B0B12;
+            --surface-color: #14141E;
+            --surface-card: #1B1B2A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            
+            --primary: #8B5CF6;
+            --secondary: #EC4899;
+            --accent: #00F0FF;
+            
+            --glass-bg: rgba(20, 20, 30, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-highlight: rgba(255, 255, 255, 0.12);
+            
+            --grad-purple-pink: linear-gradient(135deg, var(--primary), var(--secondary));
+            --grad-purple-cyan: linear-gradient(135deg, var(--primary), var(--accent));
+            --grad-dark-base: linear-gradient(180deg, var(--bg-color), #130B24);
+            
+            --font-main: 'Inter', sans-serif;
+            --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Base Configuration resets & Mobile Zoom Fixes */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Modernized Elegant Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #232335; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; width: 100%; }
+        .section-padding { padding: 140px 0; position: relative; }
+        .text-center { text-align: center; }
+
+        /* Typography Styling Rules */
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+        .gradient-text-pink { background: var(--grad-purple-pink); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-text-cyan { background: var(--grad-purple-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Button Architecture */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 16px 36px; border-radius: 100px; font-size: 1rem;
+            font-weight: 600; text-decoration: none; transition: var(--transition-premium);
+            cursor: pointer; border: none; gap: 8px;
+        }
+        .btn-primary { background: var(--grad-purple-cyan); color: #fff; box-shadow: 0 4px 24px rgba(139, 92, 246, 0.35); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(139, 92, 246, 0.55); }
+        .btn-secondary { background: var(--glass-bg); color: #fff; border: 1px solid var(--glass-border); backdrop-filter: blur(16px); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); border-color: var(--glass-highlight); }
+
+        /* Structural Glass Component */
+        .glass-panel {
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 28px; transition: var(--transition-premium);
+        }
+
+        /* Ambient Glow System */
+        .ambient-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.3; z-index: -1; pointer-events: none; max-width: 100vw; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ==========================================================================
+           HEADER NAVIGATION NAVIGATION
+           ========================================================================== */
+        nav { position: fixed; top: 0; left: 0; right: 0; padding: 24px 0; z-index: 1000; background: rgba(11, 11, 18, 0.75); backdrop-filter: blur(24px); border-bottom: 1px solid var(--glass-border); }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .brand-logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.04em; display: flex; align-items: center; gap: 8px; text-decoration: none; color: #fff; }
+        .brand-logo i { color: var(--accent); font-size: 1.7rem; }
+
+        /* ==========================================================================
+           SECTION 6: STYLED MULTI-STEP REGISTRATION APP FORM
+           ========================================================================== */
+        .section-header { max-width: 700px; margin: 0 auto 60px; text-align: center; }
+        .section-header h2 { font-size: 3.2rem; margin-bottom: 20px; }
+        .section-header p { font-size: 1.15rem; color: var(--text-secondary); }
+
+        .form-container-box { max-width: 760px; margin: 0 auto; padding: 56px; border-radius: 32px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); width: 100%; }
+        .form-progress-bar { display: flex; justify-content: space-between; margin-bottom: 56px; position: relative; width: 100%; }
+        .form-progress-bar::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: #232335; transform: translateY(-50%); z-index: 1; }
+        .progress-indicator-line { position: absolute; top: 50%; left: 0; height: 2px; background: var(--grad-purple-cyan); transform: translateY(-50%); z-index: 2; transition: var(--transition-premium); width: 0%; }
+        .progress-node { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-color); border: 2px solid #232335; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; position: relative; z-index: 3; transition: var(--transition-premium); color: var(--text-muted); }
+        .progress-node.active { border-color: var(--accent); color: var(--accent); background: var(--bg-color); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        .progress-node.complete { border-color: var(--primary); color: #fff; background: var(--primary); }
+        
+        .form-step-panel { display: none; animation: stepFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .form-step-panel.active { display: block; }
+        @keyframes stepFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .form-group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+        .form-input-wrapper { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        .form-input-wrapper.full-width { grid-column: span 2; }
+        .form-input-wrapper label { font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .form-input-wrapper input, .form-input-wrapper select, .form-input-wrapper textarea {
+            background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); padding: 16px 20px; border-radius: 12px;
+            color: #fff; font-family: var(--font-main); font-size: 1rem; transition: var(--transition-premium); width: 100%;
+        }
+        .form-input-wrapper input:focus, .form-input-wrapper select:focus, .form-input-wrapper textarea:focus { border-color: var(--accent); outline: none; background: rgba(0,0,0,0.4); box-shadow: 0 0 12px rgba(0,240,255,0.1); }
+        
+        .form-nav-row { display: flex; justify-content: space-between; margin-top: 40px; border-top: 1px solid var(--glass-border); padding-top: 32px; }
+        
+        /* Document Drag-Drop Box UI */
+        .upload-drag-zone { border: 2px dashed var(--glass-border); padding: 40px; border-radius: 16px; text-align: center; cursor: pointer; transition: var(--transition-premium); background: rgba(0,0,0,0.1); width: 100%; }
+        .upload-drag-zone:hover { border-color: var(--primary); background: rgba(139, 92, 246, 0.03); }
+        .upload-drag-zone i { font-size: 3rem; color: var(--text-muted); margin-bottom: 12px; }
+
+        /* ==========================================================================
+           SECTION 10: MONETIZATION INCOME PROJECTION SLIDER CALCULATOR
+           ========================================================================== */
+        .calc-panel-box { max-width: 840px; margin: 0 auto; padding: 48px; border-radius: 24px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center; width: 100%; }
+        .slider-group-container { display: flex; flex-direction: column; gap: 32px; width: 100%; }
+        .custom-slider-block h5 { font-size: 1rem; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .slider-flex-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+        .slider-flex-header div { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .html-range-input { width: 100%; -webkit-appearance: none; background: #232335; height: 6px; border-radius: 3px; outline: none; }
+        .html-range-input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; box-shadow: 0 0 10px rgba(0,240,255,0.5); transition: 0.2s; }
+        .html-range-input::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        .calc-output-yield { text-align: center; padding: 36px; background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px solid rgba(0, 240, 255, 0.1); width: 100%; }
+        .calc-output-yield h4 { font-size: 3.4rem; color: #FFF; margin: 8px 0; }
+
+        /* ==========================================================================
+           SECTION 11: ACCORDION INTERACTION CONTROLS (FAQ)
+           ========================================================================== */
+        .faq-accordion-stack { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; width: 100%; }
+        .faq-node-item { border: 1px solid var(--glass-border); border-radius: 16px; overflow: hidden; background: rgba(20,20,30,0.3); transition: var(--transition-premium); width: 100%; }
+        .faq-head-trigger { padding: 24px; width: 100%; background: transparent; border: none; text-align: left; color: #fff; font-size: 1.15rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-family: var(--font-main); gap: 16px; }
+        .faq-head-trigger i { transition: transform 0.4s ease; color: var(--primary); flex-shrink: 0; }
+        .faq-panel-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); background: rgba(0,0,0,0.15); }
+        .faq-inner-body { padding: 0 24px 24px 24px; color: var(--text-secondary); font-size: 0.98rem; }
+        .faq-node-item.open { border-color: var(--glass-highlight); background: rgba(20,20,30,0.6); }
+        .faq-node-item.open .faq-head-trigger i { transform: rotate(180deg); color: var(--accent); }
+
+        /* ==========================================================================
+           FOOTER MATRIX
+           ========================================================================== */
+        footer { border-top: 1px solid var(--glass-border); padding: 80px 0 40px; background: #06060A; font-size: 0.9rem; }
+        .footer-matrix { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 60px; }
+        .footer-column h4 { color: #fff; margin-bottom: 24px; font-weight: 600; }
+        .footer-column ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+        .footer-column ul li a { color: var(--text-secondary); text-decoration: none; transition: 0.2s; }
+        .footer-column ul li a:hover { color: var(--accent); }
+        .footer-baseline { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; display: flex; justify-content: space-between; color: var(--text-muted); flex-wrap: wrap; gap: 16px; }
+
+        /* ==========================================================================
+           RESPONSIVE STRUCTURAL OVERRIDES
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .calc-panel-box { grid-template-columns: 1fr; gap: 36px; }
+            .form-container-box { padding: 36px 24px; }
+        }
+        @media (max-width: 768px) {
+            .section-header h2 { font-size: 2.2rem; }
+            .form-group-grid { grid-template-columns: 1fr; gap: 16px; }
+            .form-input-wrapper.full-width { grid-column: span 1; }
+            .footer-matrix { grid-template-columns: 1fr; gap: 32px; }
+            .calc-output-yield h4 { font-size: 2.6rem; }
+            .faq-head-trigger { font-size: 1rem; padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Layered Backdrop Ambient Lighting Orbs bounded inside window tree -->
+    <div class="ambient-orb" style="top: 0; left: 0; width: 400px; height: 400px; background: var(--primary);"></div>
+    <div class="ambient-orb" style="top: 35%; right: 0; width: 400px; height: 400px; background: var(--secondary); opacity: 0.2;"></div>
+    <div class="ambient-orb" style="bottom: 10%; left: 0; width: 500px; height: 500px; background: var(--accent); opacity: 0.15;"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="container nav-flex">
+            <a href="index.html" class="brand-logo">
+                <i class="ph-fill ph-infinity"></i> Angel Priyanka
+            </a>
+        </div>
+    </nav>
+
+    <!-- SECTION 6: STYLED MULTI-STEP APPLICATION FORM -->
+    <section class="section-padding" id="application-portal" style="padding-top: 160px;">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Apply to Become a Host</h2>
+            </div>
+            
+            <div class="glass-panel form-container-box reveal">
+                <!-- Progress Header Tracker Component -->
+                <div class="form-progress-bar">
+                    <div class="progress-indicator-line" id="form-progress-line"></div>
+                    <div class="progress-node active" data-step="1">1</div>
+                    <div class="progress-node" data-step="2">2</div>
+                    <div class="progress-node" data-step="3">3</div>
+                    <div class="progress-node" data-step="4">4</div>
+                </div>
+                
+                <form id="hostOnboardingForm" onsubmit="handleFormSubmission(event)">
+                    <!-- STEP 1: PERSONAL INFORMATION -->
+                    <div class="form-step-panel active" data-step-panel="1">
+                        <h3 style="margin-bottom: 24px; font-size: 1.5rem;">Personal Information</h3>
+                        <div class="form-group-grid">
+                            <div class="form-input-wrapper">
+                                <label>Full Legal Name</label>
+                                <input type="text" required placeholder="Alexander Wright">
+                            </div>
+                            <div class="form-input-wrapper">
+                                <label>Professional Email</label>
+                                <input type="email" required placeholder="alex@nexus.xyz">
+                            </div>
+                            <div class="form-input-wrapper">
+                                <label>Primary Location</label>
+                                <input type="text" required placeholder="London, UK">
+                            </div>
+                            <div class="form-input-wrapper">
+                                <label>LinkedIn Profile</label>
+                                <input type="url" required placeholder="https://linkedin.com/in/username">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: HOST PROFILE INFO -->
+                    <div class="form-step-panel" data-step-panel="2">
+                        <h3 style="margin-bottom: 24px; font-size: 1.5rem;">Host Profile Architecture</h3>
+                        <div class="form-group-grid">
+                            <div class="form-input-wrapper">
+                                <label>Primary Host Category</label>
+                                <select required>
+                                    <option value="" disabled selected>Select Specialization</option>
+                                    <option>Venture & Tech Ecosystems</option>
+                                    <option>Creative Arts & Media</option>
+                                    <option>Executive Professional Circles</option>
+                                    <option>Wellness & Performance Sports</option>
+                                </select>
+                            </div>
+                            <div class="form-input-wrapper">
+                                <label>Current Network Size</label>
+                                <select required>
+                                    <option value="" disabled selected>Select Reach Metric</option>
+                                    <option>0 - 1,000 members</option>
+                                    <option>1,000 - 10,000 members</option>
+                                    <option>10,000 - 50,000 members</option>
+                                    <option>50,000+ members</option>
+                                </select>
+                            </div>
+                            <div class="form-input-wrapper full-width">
+                                <label>Professional Bio</label>
+                                <textarea rows="4" placeholder="Detail your background and connection to community building..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: EXPERIENCE SPECS -->
+                    <div class="form-step-panel" data-step-panel="3">
+                        <h3 style="margin-bottom: 24px; font-size: 1.5rem;">Target Experience Details</h3>
+                        <div class="form-group-grid">
+                            <div class="form-input-wrapper">
+                                <label>Intended Event Modality</label>
+                                <select required>
+                                    <option>Strictly In-Person (Offline)</option>
+                                    <option>Digital Broadcasts (Online)</option>
+                                    <option>Hybrid Frameworks</option>
+                                </select>
+                            </div>
+                            <div class="form-input-wrapper">
+                                 <label>Gathering Recurrence</label>
+                                <select required>
+                                    <option>Weekly Sessions</option>
+                                    <option>Monthly Intensives</option>
+                                    <option>Quarterly Summits</option>
+                                </select>
+                            </div>
+                            <div class="form-input-wrapper full-width">
+                                <label>Describe your proposed signature experience template</label>
+                                <textarea rows="3" placeholder="Briefly pitch the environment format, guest profiles, and curation structure..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: VERIFICATION & REVIEW -->
+                    <div class="form-step-panel" data-step-panel="4">
+                        <h3 style="margin-bottom: 24px; font-size: 1.5rem;">Identity Verification & Signoff</h3>
+                        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+                            <p style="font-size:0.92rem; color: var(--text-secondary);">Upload an official government ID document (Passport, Driver License) to process secure KYC identity matching background validations.</p>
+                            <div class="upload-drag-zone">
+                                <i class="ph ph-cloud-arrow-up"></i>
+                                <h5 style="margin-bottom: 4px;">Drag validation documents here</h5>
+                                <p style="font-size:0.8rem; color: var(--text-muted);">Supports PDF, PNG, JPG format protocols up to 10MB safely</p>
+                            </div>
+                            <div style="display:flex; gap:12px; align-items:flex-start; margin-top:12px; text-align: left;">
+                                <input type="checkbox" required id="termsAgreeCheck" style="width:auto; margin-top:5px; flex-shrink: 0;">
+                                <label for="termsAgreeCheck" style="font-size:0.85rem; color:var(--text-secondary);">I verify that the information listed above is fully accurate, and I agree to the platform's host service contract, data privacy policies, and code of conduct standard parameters.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Operations Footer -->
+                    <div class="form-nav-row">
+                        <button type="button" class="btn btn-secondary" id="prevFormBtn" onclick="navigateFormSteps(-1)" style="visibility: hidden;">Back</button>
+                        <button type="button" class="btn btn-primary" id="nextFormBtn" onclick="navigateFormSteps(1)">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: INCOME PROJECTION CALCULATOR -->
+    <div class="section-padding">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Project Your Earning Potential.</h2>
+                <p>Dynamically model your gross transactional yield thresholds below based on active ticket prices and target community subscription volume scales.</p>
+            </div>
+            
+            <div class="glass-panel calc-panel-box reveal">
+                <div class="slider-group-container">
+                    <div class="custom-slider-block">
+                        <div class="slider-flex-header">
+                            <h5>Average Pass Price</h5>
+                            <div>$<span id="calc-price-lbl">85</span></div>
+                        </div>
+                        <input type="range" class="html-range-input" id="calc-price-slider" min="10" max="500" value="85" oninput="runYieldProjection()">
+                    </div>
+                    <div class="custom-slider-block">
+                        <div class="slider-flex-header">
+                            <h5>Monthly Attendees Count</h5>
+                            <div><span id="calc-volume-lbl">250</span></div>
+                        </div>
+                        <input type="range" class="html-range-input" id="calc-volume-slider" min="50" max="5000" step="50" value="250" oninput="runYieldProjection()">
+                    </div>
+                </div>
+                <div class="calc-output-yield">
+                    <span style="font-size:0.85rem; font-weight:600; color:var(--text-secondary); letter-spacing:0.05em; text-transform:uppercase;">Estimated Monthly Revenue</span>
+                    <h4 class="gradient-text-pink" id="calc-total-gross">$21,250</h4>
+                    <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Calculated using base platform transactional engine parameters.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 11: FAQ ACCORDION -->
+    <section class="section-padding" style="background: rgba(11,11,18,0.6);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Frequently Answered Queries</h2>
+                <p>Common informational indicators regarding onboarding processes and platform processing protocols.</p>
+            </div>
+            
+            <div class="faq-accordion-stack reveal">
+                <div class="faq-node-item">
+                    <button class="faq-head-trigger" onclick="toggleAccordionNode(this)">
+                        <span>Can anyone register to become a host?</span>
+                        <i class="ph ph-caret-down"></i>
+                    </button>
+                    <div class="faq-panel-content">
+                        <div class="faq-inner-body">
+                            No. To maintain the premium quality of the platform, every applicant undergoes verification checks. We select for demonstrated expertise, domain knowledge, and true intent to build real-world human connections.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-node-item">
+                    <button class="faq-head-trigger" onclick="toggleAccordionNode(this)">
+                        <span>How does the identification process clear?</span>
+                        <i class="ph ph-caret-down"></i>
+                    </button>
+                    <div class="faq-panel-content">
+                        <div class="faq-inner-body">
+                            Once your application form is locked into our database, our verification engine reviews documentation checks and social cross-matching loops within 48 hours to confirm system eligibility.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-node-item">
+                    <button class="faq-head-trigger" onclick="toggleAccordionNode(this)">
+                        <span>What fees apply on transaction routing?</span>
+                        <i class="ph ph-caret-down"></i>
+                    </button>
+                    <div class="faq-panel-content">
+                        <div class="faq-inner-body">
+                            Nexus relies on clear scaling tiers. Standard configurations process a flat baseline percentage fee on paid events to cover infrastructure, fraud safety protocols, and continuous operations safely.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER MATRIX -->
+    <footer>
+        <div class="container">
+            <div class="footer-matrix">
+                <div class="footer-column">
+                    <a href="#" class="brand-logo" style="margin-bottom:16px;"><i class="ph-fill ph-infinity"></i> Angel Priyanka</a>
+                    <p style="color:var(--text-secondary); max-width:260px;">The premier ecosystem for trusted physical experiences and authentic community growth models.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Ecosystem Hub</h4>
+                    <ul>
+                        <li><a href="#">Explore Events</a></li>
+                        <li><a href="#">Verify Host Status</a></li>
+                        <li><a href="#">Whitepaper Rules</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Infrastructure</h4>
+                    <ul>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Security Thresholds</a></li>
+                        <li><a href="#">System Operational Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Governance</h4>
+                    <ul>
+                        <li><a href="#">User Privacy Commitments</a></li>
+                        <li><a href="#">Platform Terms</a></li>
+                        <li><a href="#">Code of Conduct</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-baseline">
+                <div>&copy; 2026 Angel Priyanka Inc. All rights reserved globally.</div>
+                <div style="display:flex; gap:16px; font-size:1.2rem;">
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-twitter-logo"></i></a>
+                    <a href="#" style="color:var(--text-muted);"><i class="ph-bold ph-linkedin-logo"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTION CONTROLLER INTERACTIVE RUNNERS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal Animation Initialization
+            const revealElements = document.querySelectorAll('.reveal');
+            const scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+            
+            revealElements.forEach(el => scrollObserver.observe(el));
+            
+            // Initialization run for calculated yields
+            runYieldProjection();
+        });
+
+        // Dynamic Multi-Step Form Navigation Logic
+        let activeFormStep = 1;
+        const terminalFormStep = 4;
+
+        function navigateFormSteps(direction) {
+            if (direction === 1 && !validateCurrentStepInputs()) return;
+
+            activeFormStep += direction;
+            if (activeFormStep < 1) activeFormStep = 1;
+            if (activeFormStep > terminalFormStep) activeFormStep = terminalFormStep;
+
+            // Shift step visibility states smoothly
+            document.querySelectorAll('[data-step-panel]').forEach(panel => panel.classList.remove('active'));
+            document.querySelector(`[data-step-panel="${activeFormStep}"]`).classList.add('active');
+
+            // Synchronize step tracking node icons
+            document.querySelectorAll('.progress-node').forEach(node => {
+                const nodeStep = parseInt(node.getAttribute('data-step'));
+                node.classList.remove('active', 'complete');
+                if (nodeStep === activeFormStep) node.classList.add('active');
+                else if (nodeStep < activeFormStep) node.classList.add('complete');
+            });
+
+            // Adjust width metrics of progress indicators
+            const visualPercent = ((activeFormStep - 1) / (terminalFormStep - 1)) * 100;
+            document.getElementById('form-progress-line').style.width = `${visualPercent}%`;
+
+            // Mutate layout button labels conditionally based on termination proximity
+            const nextBtn = document.getElementById('nextFormBtn');
+            const prevBtn = document.getElementById('prevFormBtn');
+
+            prevBtn.style.visibility = activeFormStep === 1 ? 'hidden' : 'visible';
+            nextBtn.innerText = activeFormStep === terminalFormStep ? 'Submit Application' : 'Continue';
+            if (activeFormStep === terminalFormStep) nextBtn.setAttribute('type', 'submit');
+            else nextBtn.setAttribute('type', 'button');
+        }
+
+        function validateCurrentStepInputs() {
+            const currentPanel = document.querySelector(`[data-step-panel="${activeFormStep}"]`);
+            const requiredFields = currentPanel.querySelectorAll('[required]');
+            let valid = true;
+            requiredFields.forEach(field => {
+                if (!field.value.trim() || (field.type === 'checkbox' && !field.checked)) {
+                    field.style.borderColor = 'rgba(236, 72, 153, 0.5)'; // Highlight validation error
+                    valid = false;
+                } else {
+                    field.style.borderColor = 'var(--glass-border)';
+                }
+            });
+            return valid;
+        }
+
+        function handleFormSubmission(event) {
+            event.preventDefault();
+            alert('Application successfully encrypted and submitted into ecosystem validation loop.');
+        }
+
+        // Proportional Earnings Slide Calculator Logic
+        function runYieldProjection() {
+            const price = parseInt(document.getElementById('calc-price-slider').value);
+            const volume = parseInt(document.getElementById('calc-volume-slider').value);
+            
+            document.getElementById('calc-price-lbl').innerText = price;
+            document.getElementById('calc-volume-lbl').innerText = volume.toLocaleString();
+            
+            const grossValue = price * volume;
+            document.getElementById('calc-total-gross').innerText = `$${grossValue.toLocaleString()}`;
+        }
+
+        // Accordion Interactive Collapse Logic
+        function toggleAccordionNode(triggerElement) {
+            const wrapperNode = triggerElement.parentElement;
+            const contextPanel = triggerElement.nextElementSibling;
+            const openState = wrapperNode.classList.contains('open');
+            
+            // Clear parallel sibling nodes inside execution stack
+            document.querySelectorAll('.faq-node-item').forEach(item => {
+                item.classList.remove('open');
+                item.querySelector('.faq-panel-content').style.maxHeight = null;
+            });
+            
+            if (!openState) {
+                wrapperNode.classList.add('open');
+                contextPanel.style.maxHeight = contextPanel.scrollHeight + "px";
+            }
+        }
+    </script>
+</body>
+</html>
